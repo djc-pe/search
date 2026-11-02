@@ -1,0 +1,345 @@
+[
+ {
+  "url": "https://www.djc.pe/u/@danny/",
+  "title": "@danny · DJC",
+  "description": "",
+  "lang": "es",
+  "site": "home"
+ },
+ {
+  "url": "https://www.djc.pe/en/",
+  "title": "DJC",
+  "description": "DJC is a digital platform where we create together.",
+  "lang": "en",
+  "site": "home"
+ },
+ {
+  "url": "https://www.djc.pe/es/",
+  "title": "DJC",
+  "description": "DJC",
+  "lang": "es",
+  "site": "home"
+ },
+ {
+  "url": "https://www.djc.pe/u/@danny/",
+  "title": "@danny · DJC",
+  "description": "",
+  "lang": "es",
+  "site": "home"
+ },
+ {
+  "url": "https://www.djc.pe/u/@null_djc/",
+  "title": "@null_djc · DJC",
+  "description": "",
+  "lang": "es",
+  "site": "home"
+ },
+ {
+  "url": "https://www.djc.pe/zh-cn/",
+  "title": "DJC",
+  "description": "DJC 是一个让我们携手创造的数字平台。",
+  "lang": "zh-CN",
+  "site": "home"
+ },
+ {
+  "url": "https://story.djc.pe/en/",
+  "title": "DJC",
+  "description": "DJC",
+  "lang": "en",
+  "site": "story"
+ },
+ {
+  "url": "https://story.djc.pe/es/",
+  "title": "DJC Story",
+  "description": "Disfruta este nuevo mundo...",
+  "lang": "es",
+  "site": "story"
+ },
+ {
+  "url": "https://story.djc.pe/es/works/232/c/1/",
+  "title": "La Lámpara - Clara - DJC Store",
+  "description": "La Lámpara - Clara - DJC Store",
+  "lang": "es",
+  "site": "story"
+ },
+ {
+  "url": "https://story.djc.pe/es/works/232/",
+  "title": "Clara | DJC Story",
+  "description": "Clara",
+  "lang": "es",
+  "site": "story"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/67/db/1d/30/95/80/43/dc/ad/cc/0f/8c/31/55/68/ed/",
+  "title": "What Is Codeforces? | DJC Tutorial",
+  "description": "A platform for practicing competitive programming by solving problems ranked by difficulty.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/9c/ad/d3/86/64/13/42/e3/a4/38/aa/b9/eb/32/19/64/",
+  "title": "What Is a Landing Page? | DJC Tutorial",
+  "description": "Learn what a landing page is, what it's for, what parts it has, when to use one and how it differs from a normal web page.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/a3/53/d1/83/b5/00/44/2a/96/0f/4c/a8/ce/98/09/bb/",
+  "title": "Codeforces Problem #1: SauSaGe Bank | DJC Tutorial",
+  "description": "Analysis and solution of Codeforces problem 2269A SauSaGe Bank: the balance-reset trap, the greedy idea and the final formula.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/ab/ec/8a/ab/9e/60/4b/66/a6/ef/78/a8/1f/a3/83/d4/",
+  "title": "What Is Software Development? | DJC Tutorial",
+  "description": "Learn what software development is: definition, stages, life cycle, methodologies and the role of the development team.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/b8/53/4d/ab/8a/be/43/70/99/d8/0b/c4/7d/98/78/8e/",
+  "title": "What Is Kaggle? | DJC Tutorial",
+  "description": "Learn what Kaggle is: machine learning competitions, public datasets, notebooks, and community. What you do there, how leaderboards work, and why it's useful for learning and for your portfolio.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/c/ai/",
+  "title": "Artificial Intelligence - DJC Tutorial",
+  "description": "Artificial intelligence and machine learning tutorials: concepts, models, data processing, and practical AI applications.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/c/databases/",
+  "title": "Databases - DJC Tutorial",
+  "description": "Database tutorials: SQL, NoSQL, data modeling, indexes, queries, and optimization to handle information efficiently.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/c/devops/",
+  "title": "DevOps - DJC Tutorial",
+  "description": "DevOps and cloud tutorials: CI/CD, containers, infrastructure as code, monitoring, and automating software deployment.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/c/programming/",
+  "title": "Programming - DJC Tutorial",
+  "description": "Programming and language tutorials: fundamentals, syntax, data structures, algorithms, and best practices to program better.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/c/software/",
+  "title": "Software Development - DJC Tutorial",
+  "description": "Tutorials about software development: what it is, the software life cycle, agile methodologies, team roles, and best practices for building programs.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/c/web/",
+  "title": "Web Development - DJC Tutorial",
+  "description": "Web development tutorials: HTML, CSS, JavaScript, frameworks, responsive design, and publishing sites on the internet.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/c8/63/12/28/99/c0/4c/74/a3/04/34/96/fc/36/e2/ca/",
+  "title": "How to Undo the Last Commit | DJC Tutorial",
+  "description": "Learn how to undo your last commit in git: soft, mixed and hard reset, amend to fix it, and revert when the commit has already been published.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/en/",
+  "title": "DJC Tutorial",
+  "description": "DJC Tutorial",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/67/db/1d/30/95/80/43/dc/ad/cc/0f/8c/31/55/68/ed/",
+  "title": "¿Qué es Codeforces? | DJC Tutorial",
+  "description": "Plataforma para practicar programación competitiva resolviendo problemas clasificados por dificultad.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/9c/ad/d3/86/64/13/42/e3/a4/38/aa/b9/eb/32/19/64/",
+  "title": "¿Qué es una Landing Page? | DJC Tutorial",
+  "description": "Aprende qué es una landing page, para qué sirve, qué partes tiene, cuándo conviene usarla y cómo se diferencia de una página web normal.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/a3/53/d1/83/b5/00/44/2a/96/0f/4c/a8/ce/98/09/bb/",
+  "title": "Problema de Codeforces #1: SauSaGe Bank | DJC Tutorial",
+  "description": "Análisis y solución del problema 2269A SauSaGe Bank de Codeforces: la trampa del reseteo del saldo, la idea greedy y la fórmula final.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/ab/ec/8a/ab/9e/60/4b/66/a6/ef/78/a8/1f/a3/83/d4/",
+  "title": "¿Qué es Software Development? | DJC Tutorial",
+  "description": "Aprende qué es el desarrollo de software (Software Development): definición, etapas, ciclo de vida, metodologías y el rol del equipo de desarrollo.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/b8/53/4d/ab/8a/be/43/70/99/d8/0b/c4/7d/98/78/8e/",
+  "title": "¿Qué es Kaggle? | DJC Tutorial",
+  "description": "Aprende qué es Kaggle: competencias de machine learning, datasets públicos, notebooks y comunidad. Qué se hace ahí, cómo funcionan las|leaderboards y por qué sirve para aprender y para tu portafolio.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/c/bases-de-datos/",
+  "title": "Bases de Datos - DJC Tutorial",
+  "description": "Tutoriales de bases de datos: SQL, NoSQL, modelado de datos, índices, consultas y optimización para manejar información de forma eficiente.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/c/devops/",
+  "title": "DevOps - DJC Tutorial",
+  "description": "Tutoriales de DevOps y nube: CI/CD, contenedores, infraestructura como código, monitoreo y automatización del despliegue de software.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/c/ia/",
+  "title": "Inteligencia Artificial - DJC Tutorial",
+  "description": "Tutoriales de inteligencia artificial y machine learning: conceptos, modelos, procesamiento de datos y aplicaciones prácticas de IA.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/c/programacion/",
+  "title": "Programación - DJC Tutorial",
+  "description": "Tutoriales de programación y lenguajes: fundamentos, sintaxis, estructuras de datos, algoritmos y buenas prácticas para programar mejor.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/c/software/",
+  "title": "Desarrollo de Software - DJC Tutorial",
+  "description": "Tutoriales sobre desarrollo de software: qué es, ciclo de vida del software, metodologías ágiles, roles de equipo y buenas prácticas para crear programas.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/c/web/",
+  "title": "Desarrollo Web - DJC Tutorial",
+  "description": "Tutoriales de desarrollo web: HTML, CSS, JavaScript, frameworks, diseño responsive y publicación de sitios en internet.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/c8/63/12/28/99/c0/4c/74/a3/04/34/96/fc/36/e2/ca/",
+  "title": "¿Cómo deshacer el último commit? | DJC Tutorial",
+  "description": "Aprende a deshacer tu último commit en git: reset suave, mixto y duro, amend para corregir, y revert cuando el commit ya fue publicado.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/",
+  "title": "DJC Tutorial",
+  "description": "DJC Tutorial",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/67/db/1d/30/95/80/43/dc/ad/cc/0f/8c/31/55/68/ed/",
+  "title": "什么是 Codeforces？| DJC 教程",
+  "description": "一个通过解决不同难度的题目来练习竞赛编程的平台。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/9c/ad/d3/86/64/13/42/e3/a4/38/aa/b9/eb/32/19/64/",
+  "title": "什么是落地页（Landing Page）？| DJC 教程",
+  "description": "了解什么是落地页、它有什么作用、包含哪些部分、什么时候适合使用，以及它与普通网页的区别。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/a3/53/d1/83/b5/00/44/2a/96/0f/4c/a8/ce/98/09/bb/",
+  "title": "Codeforces 题目 #1：SauSaGe Bank | DJC 教程",
+  "description": "Codeforces 2269A SauSaGe Bank 题目的分析与解答：余额重置的陷阱、贪心思路以及最终公式。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/ab/ec/8a/ab/9e/60/4b/66/a6/ef/78/a8/1f/a3/83/d4/",
+  "title": "什么是软件开发？| DJC 教程",
+  "description": "了解什么是软件开发：定义、阶段、生命周期、开发方法以及开发团队中的角色。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/b8/53/4d/ab/8a/be/43/70/99/d8/0b/c4/7d/98/78/8e/",
+  "title": "什么是 Kaggle？| DJC 教程",
+  "description": "了解什么是 Kaggle：机器学习竞赛、公开数据集、Notebook 和社区。你可以在上面做什么、排行榜如何运作，以及它为什么有助于学习和构建作品集。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/c/ai/",
+  "title": "人工智能 - DJC 教程",
+  "description": "人工智能与机器学习教程：概念、模型、数据处理以及 AI 的实际应用。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/c/databases/",
+  "title": "数据库 - DJC 教程",
+  "description": "数据库教程：SQL、NoSQL、数据建模、索引、查询和优化，帮助你高效管理信息。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/c/devops/",
+  "title": "DevOps - DJC 教程",
+  "description": "DevOps 与云教程：CI/CD、容器、基础设施即代码、监控以及软件部署自动化。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/c/programming/",
+  "title": "编程 - DJC 教程",
+  "description": "编程与语言教程：基础、语法、数据结构、算法以及让你写得更好的最佳实践。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/c/software/",
+  "title": "软件开发 - DJC 教程",
+  "description": "关于软件开发的教程：什么是软件开发、软件生命周期、敏捷方法、团队角色以及构建程序的最佳实践。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/c/web/",
+  "title": "网页开发 - DJC 教程",
+  "description": "网页开发教程：HTML、CSS、JavaScript、框架、响应式设计以及在互联网上发布网站。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/c8/63/12/28/99/c0/4c/74/a3/04/34/96/fc/36/e2/ca/",
+  "title": "如何撤销最后一次提交？| DJC 教程",
+  "description": "学习在 git 中撤销最后一次提交：soft、mixed 和 hard reset，用 amend 修正，以及在提交已发布时使用 revert。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/",
+  "title": "DJC 教程",
+  "description": "DJC 教程",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ }
+]
