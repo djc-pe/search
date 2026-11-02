@@ -36,7 +36,10 @@ function loadEmbedder() {
     const files = new Map();
     embedderReady = import(LIB_URL).then((lib) =>
       createEmbedder(lib, {
-        modelPath: MODELS.href,
+        // Ruta sin dominio (/models/ o /web/search/models/), no la URL entera:
+        // con una URL http(s), transformers.js 4.x no busca el modelo en local
+        // y, con las descargas remotas desactivadas, da por perdido el tokenizer.
+        modelPath: MODELS.pathname,
         progress: (p) => {
           if (p.status !== 'progress' || !p.total) return;
           files.set(p.file, p);
