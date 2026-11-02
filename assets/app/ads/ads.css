@@ -15,3 +15,18 @@
 .search-result--ad ins.adsbygoogle {
   margin-top: 1.8rem; /* debajo de la etiqueta */
 }
+
+/* Móvil: content2 es de tamaño fijo (300x250); centrado y con poco margen
+ * lateral para que quepa en pantallas estrechas. */
+@media (max-width: 768px) {
+  .search-result--ad {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-result--ad {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
