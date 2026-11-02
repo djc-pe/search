@@ -2,8 +2,7 @@
  * muestra las páginas más parecidas de data/.
  *
  * El modelo (~23 MB, más el runtime de ONNX) solo se descarga si hay una
- * consulta o cuando la persona toca el buscador; después lo guarda la caché del
- * navegador. Las rutas son relativas a la página: funciona igual en
+ * consulta; después lo guarda la caché del navegador. Las rutas son relativas a la página: funciona igual en
  * https://search.djc.pe/ y en local (http://localhost:8000/web/search/).
  */
 import { createEmbedder } from './embed.js';
@@ -33,28 +32,16 @@ const indexReady = loadIndex(async (name, version) => {
 let embedderReady = null;
 function loadEmbedder() {
   if (!embedderReady) {
-    const files = new Map();
     embedderReady = import(LIB_URL).then((lib) =>
       createEmbedder(lib, {
         // Ruta sin dominio (/models/ o /web/search/models/), no la URL entera:
         // con una URL http(s), transformers.js 4.x no busca el modelo en local
         // y, con las descargas remotas desactivadas, da por perdido el tokenizer.
         modelPath: MODELS.pathname,
-        progress: (p) => {
-          if (p.status !== 'progress' || !p.total) return;
-          files.set(p.file, p);
-          let loaded = 0, total = 0;
-          for (const f of files.values()) { loaded += f.loaded; total += f.total; }
-          say(`Descargando el modelo: ${mb(loaded)} de ${mb(total)}`);
-        },
       }));
     embedderReady.catch(() => { embedderReady = null; }); // permitir reintentar
   }
   return embedderReady;
-}
-
-function mb(bytes) {
-  return (bytes / 1024 / 1024).toFixed(1) + ' MB';
 }
 
 function say(text, isError = false) {
@@ -62,28 +49,48 @@ function say(text, isError = false) {
   status.classList.toggle('search-status--error', isError);
 }
 
-let current = 0; // descarta resultados de una búsqueda anterior que termine tarde
+// Mientras busca: bloques vacíos animados con la forma de los resultados.
+// "Buscando" queda para lectores de pantalla (aria-live), no a la vista.
+const PLACEHOLDERS = 3;
+
+function showLoading() {
+  const items = Array.from({ length: PLACEHOLDERS }, () => {
+    const li = document.createElement('li');
+    li.className = 'search-result search-result--loading';
+    li.setAttribute('aria-hidden', 'true');
+    for (const cls of ['title', 'url', 'text']) {
+      const bar = document.createElement('div');
+      bar.className = `search-loading__bar search-loading__bar--${cls}`;
+      li.append(bar);
+    }
+    return li;
+  });
+  list.replaceChildren(...items);
+  list.setAttribute('aria-busy', 'true');
+  status.classList.add('search-status--sr');
+  say('Buscando');
+}
+
+function hideLoading() {
+  list.removeAttribute('aria-busy');
+  status.classList.remove('search-status--sr');
+}
 
 async function run(query) {
-  const id = ++current;
-  list.replaceChildren();
   query = query.trim();
   document.title = query ? `${query} - DJC Search` : 'DJC Search';
-  if (!query) {
-    say('');
-    return;
-  }
-  say('Buscando');
+  if (!query) return;
+  showLoading();
   try {
     const [index, embed] = await Promise.all([indexReady, loadEmbedder()]);
-    if (id !== current) return;
     const [vector] = await embed([query]);
     const results = rank(index, vector, TOP);
-    if (id !== current) return;
+    hideLoading();
     render(results);
     say(results.length ? '' : 'Sin resultados');
   } catch (err) {
-    if (id !== current) return;
+    hideLoading();
+    list.replaceChildren();
     say(`No se pudo buscar: ${err.message}`, true);
     console.error('[search]', err);
   }
@@ -171,9 +178,8 @@ function adBlock() {
   return li;
 }
 
-// Pide el anuncio cuando el bloque ya está en la página. Si AdSense no lo
-// procesa (bloqueado o sin cargar), el bloque se quita para no dejar un
-// recuadro vacío; si no hay anuncio que mostrar, lo oculta el CSS (unfilled).
+// Pide el anuncio cuando el bloque ya está en la página. El bloque se queda
+// siempre, aunque AdSense no entregue anuncio (queda vacío, con su etiqueta).
 function fillAd(li) {
   const ins = li.querySelector('ins.adsbygoogle');
   if (!ins) return;
@@ -181,11 +187,14 @@ function fillAd(li) {
     (window.adsbygoogle = window.adsbygoogle || []).push({});
   } catch (err) {
     console.warn('[search] anuncio:', err);
-    li.remove();
     return;
   }
   setTimeout(() => {
-    if (!ins.hasAttribute('data-adsbygoogle-status')) li.remove();
+    // En la consola queda qué pasó: filled, unfilled o sin procesar.
+    const status = ins.hasAttribute('data-adsbygoogle-status')
+      ? ins.getAttribute('data-ad-status') || 'sin estado todavía'
+      : 'AdSense no lo procesó (script bloqueado o sin cargar)';
+    console.info(`[search] anuncio: ${status}`);
   }, AD_TIMEOUT);
 }
 
@@ -204,22 +213,12 @@ function queryFromUrl() {
   return new URLSearchParams(location.search).get('q') || '';
 }
 
+// Cada búsqueda es una página nueva (el formulario navega a ?q=...): así cada
+// una tiene sus anuncios. El modelo no se vuelve a descargar, sale de la caché.
 form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const query = input.value.trim();
-  const url = new URL(location.href);
-  if (query) url.searchParams.set('q', query); else url.searchParams.delete('q');
-  if (url.href !== location.href) history.pushState(null, '', url);
-  run(query);
+  input.value = input.value.trim();
+  if (!input.value) e.preventDefault();
 });
-
-window.addEventListener('popstate', () => {
-  input.value = queryFromUrl();
-  run(input.value);
-});
-
-// adelantar la descarga del modelo en cuanto la persona va a buscar
-input.addEventListener('focus', () => { loadEmbedder().catch(() => {}); }, { once: true });
 
 input.value = queryFromUrl();
 if (input.value) run(input.value);
