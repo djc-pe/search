@@ -144,8 +144,10 @@ function block(item) {
 
 // Anuncio de AdSense después del resultado AD_AFTER (si hay más resultados).
 const AD_AFTER = 3;
+// Bloque "search-1" de AdSense, tal cual ads/search-1.html (el script de
+// adsbygoogle.js ya está en el <head> de index.html).
 const AD_CLIENT = 'ca-pub-3775900744037301';
-const AD_SLOT = '8296560475';
+const AD_SLOT = '7921187118';
 const AD_TIMEOUT = 5000;
 // En local AdSense no sirve anuncios: se ve un recuadro de muestra.
 const LOCAL = ['localhost', '127.0.0.1', ''].includes(location.hostname);
@@ -167,6 +169,7 @@ function adBlock() {
     return li;
   }
 
+  li.append(document.createComment(' search-1 '));
   const ins = document.createElement('ins');
   ins.className = 'adsbygoogle';
   ins.style.display = 'block';
