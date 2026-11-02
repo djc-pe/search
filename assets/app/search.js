@@ -7,6 +7,7 @@
  */
 import { createEmbedder } from './embed.js';
 import { loadIndex, rank } from './index.js';
+import { insertAd } from './ads/ads.js';
 
 // transformers.js, versión fija (la misma de las pruebas de paridad).
 const LIB_URL = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.2';
@@ -96,8 +97,8 @@ async function run(query) {
   }
 }
 
-// Etiqueta de cada bloque según su dominio. Lo que no sea de DJC es 'Internet';
-// los anuncios llevan 'Ads' (kind: 'ad').
+// Etiqueta de cada bloque según su dominio. Lo que no sea de DJC es 'Internet'.
+// (Los anuncios llevan 'Ads': ver ads/ads.js.)
 const LABELS = {
   'www.djc.pe': 'DJC',
   'tutorial.djc.pe': 'DJC Tutorial',
@@ -106,7 +107,6 @@ const LABELS = {
 };
 
 function labelOf(item) {
-  if (item.kind === 'ad') return 'Ads';
   try {
     return LABELS[new URL(item.url).hostname] || 'Internet';
   } catch {
@@ -114,10 +114,10 @@ function labelOf(item) {
   }
 }
 
-// item: { url, title, description, kind } (kind: 'page' por defecto, 'ad')
+// item: { url, title, description }
 function block(item) {
   const li = document.createElement('li');
-  li.className = 'search-result' + (item.kind === 'ad' ? ' search-result--ad' : '');
+  li.className = 'search-result';
 
   const label = document.createElement('span');
   label.className = 'search-result__label';
@@ -142,74 +142,13 @@ function block(item) {
   return li;
 }
 
-// Anuncio de AdSense después del resultado AD_AFTER (si hay más resultados).
+// Anuncio después del resultado AD_AFTER, si hay más resultados (ver ads/).
 const AD_AFTER = 3;
-// Bloque "search-1" de AdSense, tal cual ads/search-1.html (el script de
-// adsbygoogle.js ya está en el <head> de index.html).
-const AD_CLIENT = 'ca-pub-3775900744037301';
-const AD_SLOT = '7921187118';
-const AD_TIMEOUT = 5000;
-// En local AdSense no sirve anuncios: se ve un recuadro de muestra.
-const LOCAL = ['localhost', '127.0.0.1', ''].includes(location.hostname);
-
-function adBlock() {
-  const li = document.createElement('li');
-  li.className = 'search-result search-result--ad';
-
-  const label = document.createElement('span');
-  label.className = 'search-result__label';
-  label.textContent = labelOf({ kind: 'ad' });
-  li.append(label);
-
-  if (LOCAL) {
-    const sample = document.createElement('div');
-    sample.className = 'search-result__ad-sample';
-    sample.textContent = 'Anuncio (muestra en local)';
-    li.append(sample);
-    return li;
-  }
-
-  li.append(document.createComment(' search-1 '));
-  const ins = document.createElement('ins');
-  ins.className = 'adsbygoogle';
-  ins.style.display = 'block';
-  ins.setAttribute('data-ad-client', AD_CLIENT);
-  ins.setAttribute('data-ad-slot', AD_SLOT);
-  ins.setAttribute('data-ad-format', 'auto');
-  ins.setAttribute('data-full-width-responsive', 'true');
-  li.append(ins);
-  return li;
-}
-
-// Pide el anuncio cuando el bloque ya está en la página. El bloque se queda
-// siempre, aunque AdSense no entregue anuncio (queda vacío, con su etiqueta).
-function fillAd(li) {
-  const ins = li.querySelector('ins.adsbygoogle');
-  if (!ins) return;
-  try {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
-  } catch (err) {
-    console.warn('[search] anuncio:', err);
-    return;
-  }
-  setTimeout(() => {
-    // En la consola queda qué pasó: filled, unfilled o sin procesar.
-    const status = ins.hasAttribute('data-adsbygoogle-status')
-      ? ins.getAttribute('data-ad-status') || 'sin estado todavía'
-      : 'AdSense no lo procesó (script bloqueado o sin cargar)';
-    console.info(`[search] anuncio: ${status}`);
-  }, AD_TIMEOUT);
-}
 
 function render(results) {
-  const items = results.map(({ doc }) => block({ ...doc, kind: 'page' }));
-  let ad = null;
-  if (items.length > AD_AFTER) {
-    ad = adBlock();
-    items.splice(AD_AFTER, 0, ad);
-  }
+  const items = results.map(({ doc }) => block(doc));
   list.replaceChildren(...items);
-  if (ad) fillAd(ad);
+  if (items.length > AD_AFTER) insertAd(items[AD_AFTER - 1]);
 }
 
 function queryFromUrl() {

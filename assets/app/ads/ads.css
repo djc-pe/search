@@ -1,0 +1,17 @@
+/* Bloque de anuncio entre los resultados: mismo borde que un resultado, la
+ * etiqueta "Ads" en contorno para distinguirla, y todo el ancho para el anuncio. */
+
+.search-result--ad {
+  padding-right: 1.2rem;
+  min-height: 6rem; /* aunque no llegue anuncio, el bloque se ve */
+}
+
+.search-result--ad .search-result__label {
+  background: transparent;
+  color: var(--color-accent, #e5f774);
+  border: 1px solid var(--color-accent, #e5f774);
+}
+
+.search-result--ad ins.adsbygoogle {
+  margin-top: 1.8rem; /* debajo de la etiqueta */
+}

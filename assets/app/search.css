@@ -120,35 +120,6 @@
   white-space: nowrap;
 }
 
-/* Anuncios: mismo bloque, etiqueta en contorno para distinguirlos. */
-.search-result--ad .search-result__label {
-  background: transparent;
-  color: var(--color-accent, #e5f774);
-  border: 1px solid var(--color-accent, #e5f774);
-}
-
-/* El anuncio usa todo el ancho: su etiqueta va encima, no al lado. */
-.search-result--ad {
-  padding-right: 1.2rem;
-}
-
-.search-result--ad {
-  min-height: 6rem; /* aunque no llegue anuncio, el bloque se ve */
-}
-
-.search-result--ad ins.adsbygoogle {
-  margin-top: 1.8rem; /* debajo de la etiqueta */
-}
-
-.search-result__ad-sample {
-  margin-top: 1.8rem;
-  padding: 2rem 1rem;
-  border: 1px dashed var(--color-border, #e5f774);
-  border-radius: 8px;
-  text-align: center;
-  color: var(--color-text-muted, #9ca3af);
-}
-
 .search-result__title {
   display: block;
   font-size: 1.15rem;
