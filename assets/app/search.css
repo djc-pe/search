@@ -39,6 +39,49 @@
   opacity: 1;
 }
 
+/* Visible solo para lectores de pantalla ("Buscando" mientras carga). */
+.search-status--sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Bloques vacíos mientras busca: barras con un brillo que las recorre. */
+.search-result--loading {
+  padding-right: 1.2rem;
+}
+
+.search-loading__bar {
+  height: 0.9rem;
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  background: linear-gradient(90deg,
+    rgba(229, 247, 116, 0.08) 25%,
+    rgba(229, 247, 116, 0.25) 50%,
+    rgba(229, 247, 116, 0.08) 75%);
+  background-size: 200% 100%;
+  animation: search-shimmer 1.4s ease-in-out infinite;
+}
+
+.search-loading__bar--title { width: 55%; height: 1.1rem; }
+.search-loading__bar--url { width: 35%; height: 0.7rem; }
+.search-loading__bar--text { width: 85%; }
+
+.search-result--loading:nth-child(2) .search-loading__bar { animation-delay: 0.15s; }
+.search-result--loading:nth-child(3) .search-loading__bar { animation-delay: 0.3s; }
+
+@keyframes search-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-loading__bar { animation: none; }
+}
+
 .search-results {
   list-style: none;
   padding: 0;
@@ -89,9 +132,8 @@
   padding-right: 1.2rem;
 }
 
-/* Sin anuncio que mostrar: fuera el bloque entero. */
-.search-result--ad:has(ins[data-ad-status="unfilled"]) {
-  display: none;
+.search-result--ad {
+  min-height: 6rem; /* aunque no llegue anuncio, el bloque se ve */
 }
 
 .search-result--ad ins.adsbygoogle {

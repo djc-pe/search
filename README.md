@@ -12,5 +12,5 @@ páginas, ya calculados. La consulta no se envía a ningún servidor.
 - `models/all-MiniLM-L6-v2/`: el modelo (Apache 2.0, ver su `README.md`).
 
 transformers.js se carga desde jsDelivr, en una versión fija (`LIB_URL` en
-`assets/app/search.js`). El modelo solo se descarga si hay una consulta o al
-tocar el buscador.
+`assets/app/search.js`). El modelo solo se descarga si hay una consulta. Cada
+búsqueda recarga la página (`?q=...`), así cada una muestra anuncios nuevos.
