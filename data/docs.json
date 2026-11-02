@@ -21,6 +21,13 @@
   "site": "home"
  },
  {
+  "url": "https://www.djc.pe/u/@carlos_djc/",
+  "title": "@carlos_djc · DJC",
+  "description": "",
+  "lang": "es",
+  "site": "home"
+ },
+ {
   "url": "https://www.djc.pe/u/@danny/",
   "title": "@danny · DJC",
   "description": "",
@@ -70,6 +77,13 @@
   "site": "story"
  },
  {
+  "url": "https://tutorial.djc.pe/en/52/07/4a/ff/40/30/4c/9c/bf/de/87/d3/42/fc/21/41/",
+  "title": "English from Scratch: Start Here | DJC Tutorial",
+  "description": "Start learning English from scratch with Carlos: how to study 15 minutes a day, your first conversation with pronunciation and the most common mistakes Spanish speakers make.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
   "url": "https://tutorial.djc.pe/en/67/db/1d/30/95/80/43/dc/ad/cc/0f/8c/31/55/68/ed/",
   "title": "What Is Codeforces? | DJC Tutorial",
   "description": "A platform for practicing competitive programming by solving problems ranked by difficulty.",
@@ -93,7 +107,7 @@
  {
   "url": "https://tutorial.djc.pe/en/ab/ec/8a/ab/9e/60/4b/66/a6/ef/78/a8/1f/a3/83/d4/",
   "title": "What Is Software Development? | DJC Tutorial",
-  "description": "Learn what software development is: definition, stages, life cycle, methodologies and the role of the development team.",
+  "description": "Learn what software development is: its stages, the software development life cycle (SDLC), the most common methodologies and who is on the team.",
   "lang": "en",
   "site": "tutorial"
  },
@@ -126,6 +140,13 @@
   "site": "tutorial"
  },
  {
+  "url": "https://tutorial.djc.pe/en/c/english/",
+  "title": "English - DJC Tutorial",
+  "description": "Learn English from scratch: everyday phrases, pronunciation guides, basic grammar and practice with answers.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
   "url": "https://tutorial.djc.pe/en/c/programming/",
   "title": "Programming - DJC Tutorial",
   "description": "Programming and language tutorials: fundamentals, syntax, data structures, algorithms, and best practices to program better.",
@@ -154,10 +175,24 @@
   "site": "tutorial"
  },
  {
+  "url": "https://tutorial.djc.pe/en/d5/fd/3f/a8/11/5b/4b/d1/a2/d8/91/10/82/63/55/9b/",
+  "title": "Depth-First Search (DFS) | DJC Tutorial",
+  "description": "Learn the DFS (depth-first search) algorithm: the idea, a step-by-step example, recursive and iterative code in C++, Python and Rust, its complexity and what it is used for.",
+  "lang": "en",
+  "site": "tutorial"
+ },
+ {
   "url": "https://tutorial.djc.pe/en/",
   "title": "DJC Tutorial",
   "description": "DJC Tutorial",
   "lang": "en",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/es/52/07/4a/ff/40/30/4c/9c/bf/de/87/d3/42/fc/21/41/",
+  "title": "Inglés desde cero: empieza aquí | DJC Tutorial",
+  "description": "Empieza a aprender inglés desde cero con Carlos: cómo estudiar 15 minutos al día, tu primera conversación con pronunciación y los errores más comunes de los hispanohablantes.",
+  "lang": "es",
   "site": "tutorial"
  },
  {
@@ -184,7 +219,7 @@
  {
   "url": "https://tutorial.djc.pe/es/ab/ec/8a/ab/9e/60/4b/66/a6/ef/78/a8/1f/a3/83/d4/",
   "title": "¿Qué es Software Development? | DJC Tutorial",
-  "description": "Aprende qué es el desarrollo de software (Software Development): definición, etapas, ciclo de vida, metodologías y el rol del equipo de desarrollo.",
+  "description": "Aprende qué es el desarrollo de software (software development): sus etapas, el ciclo de vida (SDLC), las metodologías más usadas y quién forma parte del equipo.",
   "lang": "es",
   "site": "tutorial"
  },
@@ -217,6 +252,13 @@
   "site": "tutorial"
  },
  {
+  "url": "https://tutorial.djc.pe/es/c/ingles/",
+  "title": "Inglés - DJC Tutorial",
+  "description": "Aprende inglés desde cero: frases para la vida diaria, pronunciación aproximada en español, gramática básica y práctica con respuestas.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
   "url": "https://tutorial.djc.pe/es/c/programacion/",
   "title": "Programación - DJC Tutorial",
   "description": "Tutoriales de programación y lenguajes: fundamentos, sintaxis, estructuras de datos, algoritmos y buenas prácticas para programar mejor.",
@@ -245,10 +287,24 @@
   "site": "tutorial"
  },
  {
+  "url": "https://tutorial.djc.pe/es/d5/fd/3f/a8/11/5b/4b/d1/a2/d8/91/10/82/63/55/9b/",
+  "title": "Búsqueda en profundidad (DFS) | DJC Tutorial",
+  "description": "Aprende el algoritmo DFS (búsqueda en profundidad): la idea, un ejemplo paso a paso, el código recursivo e iterativo en C++, Python y Rust, su complejidad y para qué se usa.",
+  "lang": "es",
+  "site": "tutorial"
+ },
+ {
   "url": "https://tutorial.djc.pe/es/",
   "title": "DJC Tutorial",
   "description": "DJC Tutorial",
   "lang": "es",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/52/07/4a/ff/40/30/4c/9c/bf/de/87/d3/42/fc/21/41/",
+  "title": "零基础英语：从这里开始| DJC 教程",
+  "description": "和 Carlos 一起从零开始学英语：每天学习 15 分钟的方法、带发音的第一次对话，以及西班牙语母语者最常见的错误。",
+  "lang": "zh-CN",
   "site": "tutorial"
  },
  {
@@ -308,6 +364,13 @@
   "site": "tutorial"
  },
  {
+  "url": "https://tutorial.djc.pe/zh-cn/c/english/",
+  "title": "英语 - DJC 教程",
+  "description": "从零开始学英语：日常常用句子、发音指导、基础语法和带答案的练习。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
   "url": "https://tutorial.djc.pe/zh-cn/c/programming/",
   "title": "编程 - DJC 教程",
   "description": "编程与语言教程：基础、语法、数据结构、算法以及让你写得更好的最佳实践。",
@@ -332,6 +395,13 @@
   "url": "https://tutorial.djc.pe/zh-cn/c8/63/12/28/99/c0/4c/74/a3/04/34/96/fc/36/e2/ca/",
   "title": "如何撤销最后一次提交？| DJC 教程",
   "description": "学习在 git 中撤销最后一次提交：soft、mixed 和 hard reset，用 amend 修正，以及在提交已发布时使用 revert。",
+  "lang": "zh-CN",
+  "site": "tutorial"
+ },
+ {
+  "url": "https://tutorial.djc.pe/zh-cn/d5/fd/3f/a8/11/5b/4b/d1/a2/d8/91/10/82/63/55/9b/",
+  "title": "深度优先搜索（DFS）| DJC 教程",
+  "description": "学习 DFS（深度优先搜索）算法：基本思路、逐步示例、C++、Python 和 Rust 的递归与迭代代码、复杂度以及用途。",
   "lang": "zh-CN",
   "site": "tutorial"
  },
