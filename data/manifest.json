@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "version": "12559a95c582",
+  "version": "75f01a15bedd",
   "model": {
     "id": "all-MiniLM-L6-v2",
     "file": "onnx/model_quantized.onnx",
@@ -12,10 +12,10 @@
   },
   "vectors": {
     "type": "int8",
-    "count": 162,
+    "count": 224,
     "scale": "per-vector"
   },
-  "docs": 49,
+  "docs": 59,
   "files": {
     "docs": "docs.json",
     "vectors": "vectors.json"
