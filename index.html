@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <!-- 87.34.2.92 -->
   <meta charset="UTF-8">
@@ -9,8 +9,11 @@
   <link rel="stylesheet" href="https://story.djc.pe/res/base/variable.css">
   <link rel="stylesheet" href="https://story.djc.pe/res/base/style.css">
   <link rel="stylesheet" href="https://story.djc.pe/res/base/index.css">
+  <link rel="stylesheet" href="assets/app/search.css">
   <script src="https://story.djc.pe/res/base/index.js" defer></script>
   <script src="https://story.djc.pe/res/nav/script.js" defer></script>
+  <script type="module" src="assets/app/search.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3775900744037301" crossorigin="anonymous"></script>
 
 
 <!-- Google tag (gtag.js) -->
@@ -24,14 +27,20 @@
 </script>
 
   <title>DJC Search</title>
-  <meta name="description" content="DJC Search">
+  <meta name="description" content="Busca en las páginas de DJC: tutoriales, historias y más.">
 
   <link rel="canonical" href="https://search.djc.pe/">
 </head>
 <body>
 <main class="content">
   <h1>DJC Search</h1>
-  <p>Searching...</p>
+  <form class="search-form" id="search-form" action="./" method="get" role="search">
+    <input id="search-input" name="q" type="search" placeholder="¿Qué buscas?" aria-label="Buscar" autocomplete="off">
+    <button type="submit">Buscar</button>
+  </form>
+  <p class="search-status" id="search-status" aria-live="polite"></p>
+  <ol class="search-results" id="search-results"></ol>
+  <noscript>La búsqueda se hace en tu navegador y necesita JavaScript.</noscript>
 </main>
 </body>
 </html>

@@ -1,0 +1,23 @@
+{
+  "format": 1,
+  "version": "12559a95c582",
+  "model": {
+    "id": "all-MiniLM-L6-v2",
+    "file": "onnx/model_quantized.onnx",
+    "sha256": "afdb6f1a0e45b715d0bb9b11772f032c399babd23bfc31fed1c170afc848bdb1",
+    "dims": 384,
+    "max_tokens": 256,
+    "pooling": "mean",
+    "normalize": true
+  },
+  "vectors": {
+    "type": "int8",
+    "count": 162,
+    "scale": "per-vector"
+  },
+  "docs": 49,
+  "files": {
+    "docs": "docs.json",
+    "vectors": "vectors.json"
+  }
+}
