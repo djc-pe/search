@@ -1,7 +1,7 @@
 /* Anuncios de la página de búsqueda.
  *
  * El HTML de cada anuncio está tal cual en su archivo (content1.js...). Aquí
- * solo se inserta entero, dentro de un bloque con la etiqueta "Ads". Se usa
+ * solo se inserta entero, dentro de un bloque sin etiqueta. Se usa
  * createContextualFragment y no innerHTML porque así el navegador sí ejecuta
  * el <script> del anuncio.
  */
@@ -13,7 +13,6 @@ import content2 from './content2.js';
 const MOBILE = '(max-width: 768px)';
 
 const BLOCK = (content) => `<li class="search-result search-result--ad">
-<span class="search-result__label">Ads</span>
 ${content}
 </li>`;
 

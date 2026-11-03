@@ -1,34 +1,111 @@
 /* Página de search.djc.pe: lee ?q=, calcula su vector en el navegador y
- * muestra las páginas más parecidas de data/.
+ * muestra las páginas más parecidas de los índices de cada web.
+ *
+ * sources.json dice qué raíces cargar (el search-index/root.json de cada web),
+ * qué modelo deben usar y cuántos nodos abrir por consulta (probe). Las raíces
+ * se cargan a la vez que el modelo; con el vector de la consulta se eligen los
+ * nodos más cercanos de todas las webs y solo esos se descargan. Si una raíz o
+ * un nodo falla, o es de otro modelo, se busca en los demás.
  *
  * El modelo (~23 MB, más el runtime de ONNX) solo se descarga si hay una
  * consulta; después lo guarda la caché del navegador. Las rutas son relativas a la página: funciona igual en
  * https://search.djc.pe/ y en local (http://localhost:8000/web/search/).
  */
 import { createEmbedder } from './embed.js';
-import { loadIndex, rank } from './index.js';
+import { loadRoot, selectNodes, loadNode, rankMany } from './index.js';
 import { insertAd } from './ads/ads.js';
 
 // transformers.js, versión fija (la misma de las pruebas de paridad).
 const LIB_URL = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.2';
 const TOP = 10;
 
+// Versión de la app (ver changelog/search.md en el repo de origen).
+export const APP_VERSION = '0.1.0';
+
 const form = document.getElementById('search-form');
 const input = document.getElementById('search-input');
 const status = document.getElementById('search-status');
 const list = document.getElementById('search-results');
 
-const DATA = new URL('../../data/', import.meta.url);
-const MODELS = new URL('../../models/', import.meta.url);
+const meta = document.getElementById('search-meta');
 
-const indexReady = loadIndex(async (name, version) => {
-  const url = new URL(name, DATA);
+const SOURCES = new URL('../../sources.json', import.meta.url);
+const MODELS = new URL('../../models/', import.meta.url);
+// En local (python -m http.server desde la raíz del repo) los índices se leen
+// de las carpetas de al lado (web/<web>/search-index/), no de cada dominio.
+const LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
+
+async function getJson(url, version) {
+  url = new URL(url);
   if (version) url.searchParams.set('v', version);
-  // el manifest se revalida siempre: es el que dice qué versión pedir del resto
+  // sin versión (sources y raíces) se revalida siempre: dicen qué pedir del resto
   const res = await fetch(url, version ? {} : { cache: 'no-cache' });
-  if (!res.ok) throw new Error(`${url.pathname}: ${res.status}`);
+  if (!res.ok) throw new Error(`${url.host}${url.pathname}: ${res.status}`);
   return res.json();
-});
+}
+
+let probe = 3;
+
+const rootsReady = (async () => {
+  const sources = await getJson(SOURCES);
+  probe = sources.probe || probe;
+  const loaded = await Promise.allSettled(sources.sources.map(async (source) => {
+    const base = new URL(LOCAL ? source.dev : source.url, SOURCES);
+    const root = await loadRoot(getJson, base);
+    if (root.model.sha256 !== sources.model.sha256) {
+      throw new Error(`${source.site}: su índice usa otro modelo`);
+    }
+    return root;
+  }));
+  for (const r of loaded) if (r.status === 'rejected') console.warn('[search]', r.reason);
+  const roots = loaded.filter((r) => r.status === 'fulfilled').map((r) => r.value);
+  if (!roots.length) throw new Error('no hay ningún índice disponible');
+  showMeta(roots);
+  return roots;
+})();
+
+// Nodos ya descargados en esta página (por url y versión).
+const nodeCache = new Map();
+function getNode(node) {
+  const key = `${node.url}?v=${node.version}`;
+  if (!nodeCache.has(key)) {
+    const p = loadNode(getJson, node);
+    p.catch(() => nodeCache.delete(key)); // permitir reintentar
+    nodeCache.set(key, p);
+  }
+  return nodeCache.get(key);
+}
+
+// Los nodos más cercanos a la consulta, ya cargados. Si alguno falla, sigue con los demás.
+async function nodesFor(roots, vector) {
+  const chosen = selectNodes(roots, vector, probe);
+  list.dataset.nodes = chosen.map(({ node }) => `${node.root.site}/${node.file}`).join(' ');
+  const loaded = await Promise.allSettled(chosen.map(({ node }) => getNode(node)));
+  for (const r of loaded) if (r.status === 'rejected') console.warn('[search]', r.reason);
+  const nodes = loaded.filter((r) => r.status === 'fulfilled').map((r) => r.value);
+  if (!nodes.length) throw new Error('no se pudo cargar ningún nodo del índice');
+  return nodes;
+}
+
+// Pie: "DJC Search v0.1.0" y, debajo, "Índices: DJC Tutorial (48 páginas,
+// actualizado el 3 nov. 2026), DJC (7 páginas, ...) y DJC Story (4 páginas)."
+function showMeta(roots) {
+  const parts = [...roots].sort((a, b) => b.docs - a.docs).map((m) => {
+    const name = LABELS[new URL(m.host).hostname] || m.site;
+    let text = `${name} (${m.docs} página${m.docs === 1 ? '' : 's'}`;
+    if (m.updated) {
+      const [y, mo, d] = m.updated.split('-').map(Number);
+      text += `, actualizado el ${new Date(y, mo - 1, d).toLocaleDateString('es-PE', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+    }
+    return text + ')';
+  });
+  const list = parts.length > 1 ? `${parts.slice(0, -1).join(', ')} y ${parts.at(-1)}` : parts[0];
+  const version = document.createElement('span');
+  version.textContent = `DJC Search v${APP_VERSION}`;
+  const detail = document.createElement('span');
+  detail.textContent = `Índices: ${list}.`;
+  meta.replaceChildren(version, document.createElement('br'), detail);
+}
 
 let embedderReady = null;
 function loadEmbedder() {
@@ -83,9 +160,9 @@ async function run(query) {
   if (!query) return;
   showLoading();
   try {
-    const [index, embed] = await Promise.all([indexReady, loadEmbedder()]);
+    const [roots, embed] = await Promise.all([rootsReady, loadEmbedder()]);
     const [vector] = await embed([query]);
-    const results = rank(index, vector, TOP);
+    const results = rankMany(await nodesFor(roots, vector), vector, TOP);
     hideLoading();
     render(results);
     say(results.length ? '' : 'Sin resultados');
@@ -98,7 +175,7 @@ async function run(query) {
 }
 
 // Etiqueta de cada bloque según su dominio. Lo que no sea de DJC es 'Internet'.
-// (Los anuncios llevan 'Ads': ver ads/ads.js.)
+// (Los anuncios no llevan etiqueta: ver ads/ads.js.)
 const LABELS = {
   'www.djc.pe': 'DJC',
   'tutorial.djc.pe': 'DJC Tutorial',
@@ -143,7 +220,7 @@ function block(item) {
 }
 
 // Anuncio después del resultado AD_AFTER, si hay más resultados (ver ads/).
-const AD_AFTER = 3;
+const AD_AFTER = 1;
 
 function render(results) {
   const items = results.map(({ doc }) => block(doc));
@@ -162,6 +239,7 @@ form.addEventListener('submit', (e) => {
   if (!input.value) e.preventDefault();
 });
 
+meta.textContent = `DJC Search v${APP_VERSION}`;
 input.value = queryFromUrl();
 if (input.value) run(input.value);
-indexReady.catch((err) => say(`No se pudo cargar el índice: ${err.message}`, true));
+rootsReady.catch((err) => say(`No se pudo cargar el índice: ${err.message}`, true));
