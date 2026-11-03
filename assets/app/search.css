@@ -92,11 +92,12 @@
 }
 
 /* Cada resultado es un bloque con el borde de marca y su etiqueta arriba a la
- * derecha (DJC, DJC Tutorial, Internet, Ads...). */
+ * derecha (DJC, DJC Tutorial, Internet...). La etiqueta flota: el título va a
+ * su lado y, si no cabe, sigue en las líneas de abajo con todo el ancho, sin
+ * dejar un hueco vacío. flow-root hace que el bloque contenga la etiqueta. */
 .search-result {
-  position: relative;
+  display: flow-root;
   padding: 1rem 1.2rem;
-  padding-right: 8.5rem; /* sitio para la etiqueta */
   border: 1px solid var(--color-border, #e5f774);
   border-radius: 12px;
   background: var(--color-surface, #141414);
@@ -108,9 +109,8 @@
 }
 
 .search-result__label {
-  position: absolute;
-  top: 0.8rem;
-  right: 0.8rem;
+  float: right;
+  margin: 0.15rem 0 0.3rem 0.75rem;
   padding: 0.15rem 0.6rem;
   border-radius: 999px;
   background: var(--color-accent, #e5f774);
@@ -145,6 +145,13 @@
 
 @media (max-width: 480px) {
   .search-result {
-    padding: 2.6rem 1rem 1rem; /* la etiqueta va arriba, sobre el título */
+    padding: 1rem;
   }
+}
+
+/* Versión de la app y estado de los índices, al pie. */
+.search-meta {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  opacity: 0.6;
 }

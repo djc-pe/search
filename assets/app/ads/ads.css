@@ -1,25 +1,17 @@
-/* Bloque de anuncio entre los resultados: mismo borde que un resultado, la
- * etiqueta "Ads" en contorno para distinguirla, y todo el ancho para el anuncio. */
+/* Bloque de anuncio entre los resultados: mismo borde que un resultado, sin
+ * etiqueta, y todo el ancho para el anuncio (sin el hueco que los resultados
+ * reservan para su etiqueta). */
 
 .search-result--ad {
-  padding-right: 1.2rem;
+  padding: 1rem 1.2rem;
   min-height: 6rem; /* aunque no llegue anuncio, el bloque se ve */
-}
-
-.search-result--ad .search-result__label {
-  background: transparent;
-  color: var(--color-accent, #e5f774);
-  border: 1px solid var(--color-accent, #e5f774);
-}
-
-.search-result--ad ins.adsbygoogle {
-  margin-top: 1.8rem; /* debajo de la etiqueta */
 }
 
 /* Móvil: content2 es de tamaño fijo (300x250); centrado y con poco margen
  * lateral para que quepa en pantallas estrechas. */
 @media (max-width: 768px) {
   .search-result--ad {
+    padding: 1rem 0.5rem;
     text-align: center;
   }
 }

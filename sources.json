@@ -1,0 +1,26 @@
+{
+  "format": 2,
+  "model": {
+    "id": "all-MiniLM-L6-v2",
+    "sha256": "afdb6f1a0e45b715d0bb9b11772f032c399babd23bfc31fed1c170afc848bdb1",
+    "dims": 384
+  },
+  "probe": 3,
+  "sources": [
+    {
+      "site": "home",
+      "url": "https://www.djc.pe/search-index/",
+      "dev": "../home/search-index/"
+    },
+    {
+      "site": "story",
+      "url": "https://story.djc.pe/search-index/",
+      "dev": "../story/search-index/"
+    },
+    {
+      "site": "tutorial",
+      "url": "https://tutorial.djc.pe/search-index/",
+      "dev": "../tutorial/search-index/"
+    }
+  ]
+}
