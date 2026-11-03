@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "version": "fa8d628449e7",
+  "version": "6d0aa9930dc4",
   "model": {
     "id": "all-MiniLM-L6-v2",
     "file": "onnx/model_quantized.onnx",
