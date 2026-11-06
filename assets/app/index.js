@@ -27,6 +27,14 @@ export async function loadRoot(fetchJson, base) {
   return { ...root, nodes };
 }
 
+// Las raíces del contexto (?c=tutorial o ?c=price,tienda: nombres de web, ver
+// sources.json). Sin contexto, o si ninguno existe, son todas.
+export function inContext(roots, context) {
+  const names = new Set(String(context || '').toLowerCase().split(',').map((n) => n.trim()).filter(Boolean));
+  const chosen = roots.filter((root) => names.has(root.site));
+  return chosen.length ? chosen : roots;
+}
+
 // Los nodos más cercanos a la consulta, entre todas las raíces: [{ node, score }].
 export function selectNodes(roots, query, probe = 3) {
   const scored = roots.flatMap((root) => root.nodes.map((node) => ({

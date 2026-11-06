@@ -12,7 +12,7 @@
  * https://search.djc.pe/ y en local (http://localhost:8000/web/search/).
  */
 import { createEmbedder } from './embed.js';
-import { loadRoot, selectNodes, loadNode, rankMany } from './index.js';
+import { loadRoot, selectNodes, loadNode, rankMany, inContext } from './index.js';
 import { insertAd } from './ads/ads.js';
 
 // transformers.js, versión fija (la misma de las pruebas de paridad).
@@ -20,10 +20,12 @@ const LIB_URL = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.2';
 const TOP = 10;
 
 // Versión de la app (ver changelog/search.md en el repo de origen).
-export const APP_VERSION = '0.1.0';
+export const APP_VERSION = '0.4.1';
 
 const form = document.getElementById('search-form');
 const input = document.getElementById('search-input');
+const context = document.getElementById('search-context');
+const scope = document.getElementById('search-scope');
 const status = document.getElementById('search-status');
 const list = document.getElementById('search-results');
 
@@ -45,6 +47,8 @@ async function getJson(url, version) {
 }
 
 let probe = 3;
+const kinds = new Map(); // web -> { kind, image } de su raíz
+const DEFAULT_IMAGE = new URL('./default.svg', import.meta.url).href;
 
 const rootsReady = (async () => {
   const sources = await getJson(SOURCES);
@@ -60,7 +64,9 @@ const rootsReady = (async () => {
   for (const r of loaded) if (r.status === 'rejected') console.warn('[search]', r.reason);
   const roots = loaded.filter((r) => r.status === 'fulfilled').map((r) => r.value);
   if (!roots.length) throw new Error('no hay ningún índice disponible');
+  for (const r of roots) kinds.set(r.site, { kind: r.kind || 'page', image: r.image || '' });
   showMeta(roots);
+  fillContexts(roots);
   return roots;
 })();
 
@@ -162,7 +168,7 @@ async function run(query) {
   try {
     const [roots, embed] = await Promise.all([rootsReady, loadEmbedder()]);
     const [vector] = await embed([query]);
-    const results = rankMany(await nodesFor(roots, vector), vector, TOP);
+    const results = rankMany(await nodesFor(inContext(roots, contextFromUrl()), vector), vector, TOP);
     hideLoading();
     render(results);
     say(results.length ? '' : 'Sin resultados');
@@ -174,8 +180,7 @@ async function run(query) {
   }
 }
 
-// Etiqueta de cada bloque según su dominio. Lo que no sea de DJC es 'Internet'.
-// (Los anuncios no llevan etiqueta: ver ads/ads.js.)
+// Nombre de cada web, para el pie de la página.
 const LABELS = {
   'www.djc.pe': 'DJC',
   'tutorial.djc.pe': 'DJC Tutorial',
@@ -183,22 +188,39 @@ const LABELS = {
   'search.djc.pe': 'DJC Search',
 };
 
-function labelOf(item) {
-  try {
-    return LABELS[new URL(item.url).hostname] || 'Internet';
-  } catch {
-    return 'Internet';
-  }
+// Sin imagen: un cuadro con las iniciales de las dos primeras palabras del título
+// (SVG en una data URL; colores de la marca). Sin letras en el título, no hay cuadro.
+function initialsTile(item, web) {
+  const words = (item.title || '').match(/[\p{L}\p{N}][\p{L}\p{N}']*/gu) || [];
+  const text = words.slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+  if (!text) return '';
+  const [bg, fg] = web.kind === 'product' ? ['#ffffff', '#141414'] : ['#1d1d1d', '#e5f774'];
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="${bg}"/>`
+    + `<text x="50" y="50" fill="${fg}" font-family="system-ui,sans-serif" font-size="40" font-weight="700" text-anchor="middle" dominant-baseline="central">${text.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</text></svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
-// item: { url, title, description }
+// La imagen del resultado: la de la página, si no la de su web y, si no, sus iniciales.
+// Si una no carga, pasa a la siguiente. Tamaño fijo: la lista no salta al cargarla.
+function thumb(item, web) {
+  const sources = [item.image, web.image, initialsTile(item, web) || DEFAULT_IMAGE].filter(Boolean);
+  const img = document.createElement('img');
+  img.className = 'search-result__image';
+  img.alt = '';
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.width = web.kind === 'product' ? 176 : 144;
+  img.height = web.kind === 'product' ? 176 : 144;
+  let at = 0;
+  img.src = sources[0];
+  img.addEventListener('error', () => { if (++at < sources.length) img.src = sources[at]; });
+  return img;
+}
+
+// item: { url, title, description, site, image }
 function block(item) {
   const li = document.createElement('li');
   li.className = 'search-result';
-
-  const label = document.createElement('span');
-  label.className = 'search-result__label';
-  label.textContent = labelOf(item);
 
   const link = document.createElement('a');
   link.className = 'search-result__title';
@@ -209,12 +231,17 @@ function block(item) {
   url.className = 'search-result__url';
   url.textContent = item.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
-  li.append(label, link, url);
+  const web = kinds.get(item.site) || { kind: 'page', image: '' };
+  li.classList.add(`search-result--${web.kind}`);
+  const body = document.createElement('div');
+  body.className = 'search-result__body';
+  body.append(link, url);
+  li.append(thumb(item, web), body);
   if (item.description && item.description !== item.title) {
     const p = document.createElement('p');
     p.className = 'search-result__description';
     p.textContent = item.description;
-    li.append(p);
+    body.append(p);
   }
   return li;
 }
@@ -228,6 +255,35 @@ function render(results) {
   if (items.length > AD_AFTER) insertAd(items[AD_AFTER - 1]);
 }
 
+function contextFromUrl() {
+  return new URLSearchParams(location.search).get('c') || '';
+}
+
+// Contexto: una fila de casillas bajo el cuadro, una por web (tutorial, home,
+// price, tienda...). Sin ninguna marcada se busca en todo. Al buscar, lo marcado
+// va en ?c= separado por comas.
+const SCOPE_ORDER = ['tutorial', 'home', 'price', 'tienda'];
+
+function fillContexts(roots) {
+  const current = new Set(contextFromUrl().toLowerCase().split(',').filter(Boolean));
+  const sites = roots.map((r) => r.site).sort((a, b) => {
+    const [i, j] = [a, b].map((n) => (SCOPE_ORDER.includes(n) ? SCOPE_ORDER.indexOf(n) : SCOPE_ORDER.length));
+    return i - j || a.localeCompare(b);
+  });
+  scope.replaceChildren(...sites.map((site) => {
+    const label = document.createElement('label');
+    label.className = 'search-scope__item';
+    const box = document.createElement('input');
+    box.type = 'checkbox';
+    box.value = site;
+    box.checked = current.has(site);
+    const text = document.createElement('span');
+    text.textContent = site.charAt(0).toUpperCase() + site.slice(1);
+    label.append(box, text);
+    return label;
+  }));
+}
+
 function queryFromUrl() {
   return new URLSearchParams(location.search).get('q') || '';
 }
@@ -237,6 +293,9 @@ function queryFromUrl() {
 form.addEventListener('submit', (e) => {
   input.value = input.value.trim();
   if (!input.value) e.preventDefault();
+  const chosen = [...scope.querySelectorAll('input:checked')].map((box) => box.value);
+  context.value = chosen.join(',');
+  context.disabled = !chosen.length; // sin contexto no va ?c=
 });
 
 meta.textContent = `DJC Search v${APP_VERSION}`;
